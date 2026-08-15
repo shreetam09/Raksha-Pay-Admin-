@@ -162,14 +162,35 @@ def clean_ieee(identity_path: str, transaction_path: str) -> pd.DataFrame:
     return out[TARGET_COLUMNS]
 
 
-def run_source_leakage_check(merged: pd.DataFrame, sample_size: int = 100_000):
-    """Sanity check: can a classifier trivially guess `source` from features alone?"""
+def run_source_leakage_check(merged: pd.DataFrame, sample_size: int = 100_000,
+                              real_feature_threshold: float = 0.70):
+    """
+    Sanity check: can a classifier trivially guess `source` from features alone?
+
+    Two things are reported, not just accuracy:
+      1. Overall accuracy per source (ulb vs rest, paysim vs rest, ieee vs rest)
+      2. Feature importances -- so we can tell WHY it's leaking.
+
+    High leakage driven by synthetic columns (device_new, payee_new,
+    location_change, call_active_during_txn) is EXPECTED, since those are
+    generated with different rules per source and were never meant to be
+    source-invariant.
+
+    High leakage driven by a REAL, shared feature (amount, device_type) is a
+    genuine problem -- it means a downstream model could learn "this amount
+    range = PaySim" as a shortcut instead of learning actual fraud patterns.
+    `real_feature_threshold` sets the bar for when that becomes a fail.
+    """
     from sklearn.model_selection import train_test_split
     from sklearn.ensemble import RandomForestClassifier
     from sklearn.metrics import accuracy_score
 
+    REAL_FEATURES = ["amount"]  # only field in this check both real and shared across all 3 sources
+    SYNTHETIC_FEATURES = ["device_new", "payee_new", "location_change", "call_active_during_txn"]
+    ALL_FEATURES = REAL_FEATURES + SYNTHETIC_FEATURES
+
     sample = merged.sample(n=min(sample_size, len(merged)), random_state=42).copy()
-    features = sample[["amount", "device_new", "payee_new", "location_change", "call_active_during_txn"]].fillna(-1)
+    features = sample[ALL_FEATURES].fillna(-1)
 
     results = {}
     for source in sample["source"].unique():
@@ -178,9 +199,60 @@ def run_source_leakage_check(merged: pd.DataFrame, sample_size: int = 100_000):
         clf = RandomForestClassifier(n_estimators=30, max_depth=6, random_state=42, n_jobs=2)
         clf.fit(Xtr, ytr)
         acc = accuracy_score(yte, clf.predict(Xte))
-        results[source] = acc
+
+        importances = dict(zip(ALL_FEATURES, clf.feature_importances_))
+        real_feature_importance = sum(importances[f] for f in REAL_FEATURES)
+
+        verdict = "FAIL" if real_feature_importance > real_feature_threshold else "PASS"
+
+        results[source] = {
+            "accuracy": acc,
+            "importances": importances,
+            "real_feature_importance": real_feature_importance,
+            "verdict": verdict,
+        }
 
     return results
+
+
+def write_leakage_report(results: dict, out_path: str, threshold: float = 0.70):
+    lines = [
+        "# Source-Leakage Sanity Check — Verdict",
+        "",
+        f"Threshold: a source is flagged FAIL if real, shared features (amount) account for",
+        f"more than {threshold:.0%} of what the classifier used to guess dataset origin.",
+        f"Leakage driven by synthetic fields (device_new, payee_new, location_change,",
+        f"call_active_during_txn) is expected and does not by itself fail this check,",
+        f"since those columns are intentionally generated differently per source.",
+        "",
+        "| Source | Accuracy | Real-feature importance (amount) | Verdict |",
+        "|---|---|---|---|",
+    ]
+    for source, r in results.items():
+        lines.append(f"| {source} | {r['accuracy']:.1%} | {r['real_feature_importance']:.1%} | **{r['verdict']}** |")
+
+    lines.append("")
+    lines.append("## Feature importance breakdown")
+    for source, r in results.items():
+        lines.append(f"\n**{source}**")
+        for feat, imp in sorted(r["importances"].items(), key=lambda x: -x[1]):
+            lines.append(f"- `{feat}`: {imp:.1%}")
+
+    lines.append("")
+    lines.append("## Reading this")
+    lines.append(
+        "If `amount` is doing most of the work, that's expected right now -- "
+        "ULB, PaySim, and IEEE have genuinely different amount distributions "
+        "by construction (different currencies/scales, different transaction types). "
+        "This becomes a real concern only once feature engineering starts normalizing "
+        "amount across sources (e.g. amount percentile within source) -- rerun this "
+        "check after that step, not just once, at the start."
+    )
+
+    with open(out_path, "w") as f:
+        f.write("\n".join(lines))
+    return out_path
+
 
 
 if __name__ == "__main__":
@@ -209,8 +281,11 @@ if __name__ == "__main__":
 
     print("\nRunning source-leakage check on a 100k-row sample...")
     leakage = run_source_leakage_check(merged)
-    for source, acc in leakage.items():
-        print(f"  classifier guesses '{source}' vs. rest with {acc:.1%} accuracy")
-    print("(high accuracy across structurally different sources is expected;")
-    print(" the useful signal is whether this DROPS as real overlapping features")
-    print(" like amount/device_type get used more heavily downstream)")
+    for source, r in leakage.items():
+        print(f"  '{source}' vs rest: {r['accuracy']:.1%} accuracy | "
+              f"real-feature (amount) importance: {r['real_feature_importance']:.1%} | "
+              f"verdict: {r['verdict']}")
+
+    report_path = os.path.join(OUTPUT_DIR, "source_leakage_report.md")
+    write_leakage_report(leakage, report_path)
+    print(f"\nWritten verdict -> {report_path}")
