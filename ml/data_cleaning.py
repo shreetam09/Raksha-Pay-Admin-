@@ -162,6 +162,112 @@ def clean_ieee(identity_path: str, transaction_path: str) -> pd.DataFrame:
     return out[TARGET_COLUMNS]
 
 
+# ---------------------------------------------------------------------------
+# Post-merge backfill: fields that stayed NaN across ALL sources
+# (account_age_days) or across specific sources (device_info, leftover
+# device_new/payee_new). Run AFTER pd.concat, since some of this needs the
+# full unified frame (and to keep per-row synthetic_fields bookkeeping simple:
+# only cells actually touched get the tag appended, not the whole column).
+# ---------------------------------------------------------------------------
+
+def _mark_synthetic(df: pd.DataFrame, mask: pd.Series, col_name: str) -> None:
+    """Append col_name to synthetic_fields only for rows where mask is True."""
+    if not mask.any():
+        return
+    current = df.loc[mask, "synthetic_fields"].fillna("")
+
+    def _append(s: str) -> str:
+        fields = [f for f in s.split(",") if f]
+        if col_name not in fields:
+            fields.append(col_name)
+        return ",".join(fields)
+
+    df.loc[mask, "synthetic_fields"] = current.map(_append)
+
+
+def backfill_account_age_days(df: pd.DataFrame, label_col: str = "label") -> pd.DataFrame:
+    """
+    No raw source provides real account age -- it's 100% null everywhere.
+    Backfill with a label-correlated synthetic distribution: fraud rides on
+    freshly-opened / recently-compromised accounts far more often than
+    legitimate activity, so fraud rows get a lower-median lognormal draw.
+    """
+    mask = df["account_age_days"].isna()
+    if not mask.any():
+        return df
+
+    is_fraud = df.loc[mask, label_col].fillna(0).astype(int).values
+    n = mask.sum()
+
+    fraud_age = np.random.lognormal(mean=3.5, sigma=1.0, size=n)   # median ~33 days
+    legit_age = np.random.lognormal(mean=6.0, sigma=1.2, size=n)   # median ~400 days
+    age = np.where(is_fraud == 1, fraud_age, legit_age)
+
+    df.loc[mask, "account_age_days"] = np.clip(age, 1, 4000).round()
+    _mark_synthetic(df, mask, "account_age_days")
+    return df
+
+
+def backfill_device_info(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Only IEEE carries real device_info strings; ULB/PaySim have no device
+    concept at all. Backfill their nulls with a coarse bucket label rather
+    than a fabricated exact device string -- don't imply precision that
+    doesn't exist. IEEE rows that are genuinely null (device present but
+    no DeviceInfo logged) get the same treatment.
+    """
+    mask = df["device_info"].isna()
+    if not mask.any():
+        return df
+
+    buckets = np.array(["generic_mobile", "generic_desktop", "generic_tablet", "unknown_device"])
+    df.loc[mask, "device_info"] = np.random.choice(buckets, size=mask.sum())
+    _mark_synthetic(df, mask, "device_info")
+    return df
+
+
+def backfill_device_payee_new(df: pd.DataFrame, label_col: str = "label") -> pd.DataFrame:
+    """
+    device_new / payee_new are already set per-source where possible
+    (ULB: synthetic, PaySim: real from txn history, IEEE device_new: real
+    from id_35). What's left is IEEE's payee_new (always null, no
+    payee-history field in that schema) and any IEEE rows missing id_35.
+    Same label-correlated heuristic as synth_coercion_signals, for
+    consistency with the rest of the synthetic layer.
+    """
+    is_fraud_full = df[label_col].fillna(0).astype(int)
+
+    dn_mask = df["device_new"].isna()
+    if dn_mask.any():
+        is_fraud = is_fraud_full[dn_mask].values
+        p = np.where(is_fraud == 1, 0.4, 0.05)
+        df.loc[dn_mask, "device_new"] = np.random.random(dn_mask.sum()) < p
+        _mark_synthetic(df, dn_mask, "device_new")
+
+    pn_mask = df["payee_new"].isna()
+    if pn_mask.any():
+        is_fraud = is_fraud_full[pn_mask].values
+        p = np.where(is_fraud == 1, 0.5, 0.08)
+        df.loc[pn_mask, "payee_new"] = np.random.random(pn_mask.sum()) < p
+        _mark_synthetic(df, pn_mask, "payee_new")
+
+    return df
+
+
+def backfill_all(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Run all post-merge backfills. balance_before/balance_after are
+    DELIBERATELY excluded -- ULB (card-present txns) has no real balance
+    concept, so fabricating a number there is worse than leaving it NaN.
+    Handle that gap downstream with a `has_balance_data` flag instead of a
+    synthetic value.
+    """
+    df = backfill_account_age_days(df)
+    df = backfill_device_info(df)
+    df = backfill_device_payee_new(df)
+    return df
+
+
 def run_source_leakage_check(merged: pd.DataFrame, sample_size: int = 100_000,
                               real_feature_threshold: float = 0.70):
     """
@@ -254,6 +360,10 @@ def write_leakage_report(results: dict, out_path: str, threshold: float = 0.70):
     return out_path
 
 
+def print_null_report(df: pd.DataFrame, label: str):
+    print(f"\nNull counts ({label}):")
+    print(df.isnull().sum())
+
 
 if __name__ == "__main__":
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -272,6 +382,13 @@ if __name__ == "__main__":
 
     merged = pd.concat([ulb, paysim, ieee], ignore_index=True)
     del ulb, paysim, ieee
+
+    print_null_report(merged, "pre-backfill")
+
+    print("\nBackfilling account_age_days, device_info, leftover device_new/payee_new...")
+    merged = backfill_all(merged)
+
+    print_null_report(merged, "post-backfill")
 
     out_path = os.path.join(OUTPUT_DIR, "unified_transactions.csv")
     merged.to_csv(out_path, index=False)

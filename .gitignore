@@ -1,2 +1,62 @@
 ml/datasets
 */.env
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Datasets (large, not for git) ---
+datasets/
+*.csv
+*.csv.gz
+
+# --- Processed data / feature matrices ---
+processed/
+*.parquet
+*.feather
+
+# --- Model artifacts ---
+artifacts/
+*.joblib
+*.pkl
+*.pickle
+*.pt
+*.pth
+*.h5
+*.onnx
+*.ckpt
+mlruns/
+mlflow.db
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- Env / secrets ---
+.env
+.env.*
+*.key
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Kaggle ---
+kaggle.json
