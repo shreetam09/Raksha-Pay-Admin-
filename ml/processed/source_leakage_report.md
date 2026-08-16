@@ -8,32 +8,32 @@ since those columns are intentionally generated differently per source.
 
 | Source | Accuracy | Real-feature importance (amount) | Verdict |
 |---|---|---|---|
-| paysim | 99.8% | 26.7% | **PASS** |
-| ulb | 99.8% | 27.6% | **PASS** |
-| ieee | 100.0% | 9.3% | **PASS** |
+| paysim | 99.6% | 38.6% | **PASS** |
+| ulb | 97.8% | 65.0% | **PASS** |
+| ieee | 97.5% | 47.9% | **PASS** |
 
 ## Feature importance breakdown
 
 **paysim**
-- `payee_new`: 57.0%
-- `amount`: 26.7%
-- `device_new`: 16.4%
-- `location_change`: 0.0%
+- `payee_new`: 61.0%
+- `amount`: 38.6%
+- `device_new`: 0.3%
+- `location_change`: 0.1%
 - `call_active_during_txn`: 0.0%
 
 **ulb**
-- `payee_new`: 60.8%
-- `amount`: 27.6%
-- `device_new`: 11.4%
+- `amount`: 65.0%
+- `payee_new`: 30.4%
+- `device_new`: 4.4%
 - `call_active_during_txn`: 0.1%
 - `location_change`: 0.1%
 
 **ieee**
-- `payee_new`: 55.9%
-- `device_new`: 34.8%
-- `amount`: 9.3%
-- `location_change`: 0.0%
-- `call_active_during_txn`: 0.0%
+- `payee_new`: 50.0%
+- `amount`: 47.9%
+- `device_new`: 1.8%
+- `call_active_during_txn`: 0.2%
+- `location_change`: 0.1%
 
 ## Reading this
 If `amount` is doing most of the work, that's expected right now -- ULB, PaySim, and IEEE have genuinely different amount distributions by construction (different currencies/scales, different transaction types). This becomes a real concern only once feature engineering starts normalizing amount across sources (e.g. amount percentile within source) -- rerun this check after that step, not just once, at the start.
