@@ -4,3 +4,4 @@ scikit-learn
 pyarrow
 pytest
 pytest-cov
+torch
