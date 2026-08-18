@@ -1,7 +1,26 @@
+# ---------- core data / ML ----------
 pandas
 numpy
 scikit-learn
+scipy
+joblib
 pyarrow
+
+# ---------- deep learning ----------
+torch
+matplotlib
+
+# ---------- model export / serving ----------
+onnxruntime
+sng4onnx
+
+# ---------- TFLite export chain (export_student.py, benchmark_student.py) ----------
+onnx2tf
+tf-keras
+onnx-graphsurgeon
+ai-edge-litert
+tensorflow
+
+# ---------- testing ----------
 pytest
 pytest-cov
-torch
