@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "RakshaPay Bank Admin"
+description = "A bank administration console for monitoring branch accounts, customer risk, transactions, and alerts with responsive light and dark themes."
+version = "1.0.0"
+id = "artifacts/rakshapay-admin"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24247
+
+[services.development]
+run = "pnpm --filter @workspace/rakshapay-admin run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/rakshapay-admin", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/rakshapay-admin/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24247"
+BASE_PATH = "/"

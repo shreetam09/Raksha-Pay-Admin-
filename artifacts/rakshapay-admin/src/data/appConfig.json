@@ -1,0 +1,616 @@
+{
+  "branding": {
+    "name": "RakshaPay",
+    "subtitle": "Risk intelligence",
+    "initials": "RP"
+  },
+  "user": {
+    "name": "Ananya Singh",
+    "role": "Bank Admin",
+    "initials": "AS"
+  },
+  "navigation": [
+    {
+      "label": "Workspace",
+      "items": [
+        { "href": "/", "label": "Overview", "icon": "LayoutDashboard" },
+        { "href": "/accounts/rp-092", "label": "Accounts", "icon": "WalletCards" },
+        { "href": "/transactions", "label": "Transactions", "icon": "ArrowLeftRight" },
+        { "href": "/alerts", "label": "Alerts", "icon": "Bell", "count": 7 },
+        { "href": "/analytics", "label": "Risk analytics", "icon": "BarChart3" }
+      ]
+    },
+    {
+      "label": "Administration",
+      "items": [
+        { "href": "/settings", "label": "System settings", "icon": "Settings" },
+        { "href": "/settings", "label": "Users & roles", "icon": "Users" }
+      ]
+    }
+  ],
+  "pageTitles": {
+    "/": "Overview",
+    "/alerts": "Risk alerts",
+    "/transactions": "Transactions",
+    "/analytics": "Risk analytics",
+    "/settings": "System settings"
+  },
+  "header": {
+    "controlRoomLabel": "Control room",
+    "lastUpdated": "Last updated 18 May 2025, 11:42 AM",
+    "notificationAlert": "You have 7 alerts waiting for review"
+  },
+  "dashboard": {
+    "dateLocation": "Monday, 18 May 2025 · New Delhi",
+    "greeting": "Good morning, Ananya.",
+    "subtitle": "Here is the signal across your branch network.",
+    "primaryBranch": "Connaught Place Branch",
+    "metrics": [
+      { "id": "total-accounts", "label": "Total accounts", "value": "1,248", "delta": "8.8%", "detail": "vs last 30 days", "icon": "Users", "positive": true },
+      { "id": "total-customers", "label": "Total customers", "value": "1,183", "delta": "7.3%", "detail": "vs last 30 days", "icon": "UserRound", "positive": true },
+      { "id": "high-risk-accounts", "label": "High risk accounts", "value": "37", "delta": "12.1%", "detail": "vs last 30 days", "icon": "ShieldAlert", "positive": false },
+      { "id": "transactions-today", "label": "Transactions today", "value": "2,923", "delta": "15.4%", "detail": "vs yesterday", "icon": "ArrowLeftRight", "positive": true },
+      { "id": "transaction-value", "label": "Transaction value", "value": "₹8.42 Cr", "delta": "10.7%", "detail": "today so far", "icon": "CreditCard", "positive": true }
+    ],
+    "riskDistribution": {
+      "eyebrow": "Portfolio",
+      "title": "Risk distribution",
+      "detail": "Account exposure across the branch",
+      "totalLabel": "Total accounts",
+      "totalValue": "1,248",
+      "slices": [
+        { "name": "Low risk", "value": 812, "count": "812", "percent": "65.1%", "dotColor": "bg-primary", "sliceColor": "#beff50" },
+        { "name": "Medium risk", "value": 352, "count": "352", "percent": "28.2%", "dotColor": "bg-amber-400", "sliceColor": "#e7b631" },
+        { "name": "High risk", "value": 37, "count": "37", "percent": "3.0%", "dotColor": "bg-red-500", "sliceColor": "#db5547" },
+        { "name": "Under review", "value": 47, "count": "47", "percent": "3.7%", "dotColor": "bg-stone-400", "sliceColor": "#92938a" }
+      ]
+    },
+    "scoreOverview": {
+      "eyebrow": "7 day view",
+      "title": "Risk score overview",
+      "detail": "Average score across monitored accounts"
+    },
+    "topRiskReasons": {
+      "eyebrow": "Signal mix",
+      "title": "Top risk reasons",
+      "detail": "What is moving the queue today",
+      "reasons": [
+        { "name": "Transactions to high-risk entities", "percent": "42%", "icon": "ShieldAlert" },
+        { "name": "Unusual transaction pattern", "percent": "28%", "icon": "Activity" },
+        { "name": "First-time payee (high value)", "percent": "16%", "icon": "UserRound" },
+        { "name": "Multiple high-value transactions", "percent": "8%", "icon": "CreditCard" },
+        { "name": "Other", "percent": "6%", "icon": "Tag" }
+      ]
+    },
+    "table": {
+      "eyebrow": "Monitored book",
+      "title": "Accounts in Connaught Place Branch",
+      "searchPlaceholder": "Search name, account, ID…",
+      "columns": [
+        "Account holder",
+        "Account number",
+        "Customer ID",
+        "Account type",
+        "KYC status",
+        "Avg risk score",
+        "Risk level",
+        "Transactions (30D)",
+        "Value (30D)",
+        "Action"
+      ]
+    }
+  },
+  "alerts": {
+    "header": {
+      "subtitle": "Live queue · 3 require attention",
+      "title": "Risk alerts",
+      "description": "Triage signals before they become customer impact.",
+      "openBadge": "3 open"
+    },
+    "metrics": [
+      { "label": "Open alerts", "value": "3", "delta": "2 today", "detail": "awaiting review", "icon": "Bell", "positive": false },
+      { "label": "Investigating", "value": "1", "delta": "14 min", "detail": "average response time", "icon": "Clock3", "positive": true },
+      { "label": "Resolved today", "value": "18", "delta": "22.4%", "detail": "vs yesterday", "icon": "CheckCircle2", "positive": true },
+      { "label": "False positive rate", "value": "4.8%", "delta": "0.7%", "detail": "this month", "icon": "ShieldCheck", "positive": true }
+    ],
+    "filterOptions": ["All", "Open", "Investigating", "Resolved"]
+  },
+  "transactionsPage": {
+    "header": {
+      "subtitle": "18 May 2025 · All branches",
+      "title": "Transaction monitoring",
+      "description": "A live view of movement that needs context."
+    },
+    "metrics": [
+      { "label": "Transactions today", "value": "2,923", "delta": "15.4%", "detail": "vs yesterday", "icon": "Activity", "positive": true },
+      { "label": "Value processed", "value": "₹8.42 Cr", "delta": "10.7%", "detail": "today so far", "icon": "CreditCard", "positive": true },
+      { "label": "In review", "value": "42", "delta": "8 new", "detail": "since 9:00 AM", "icon": "Clock3", "positive": false },
+      { "label": "Blocked", "value": "19", "delta": "3 today", "detail": "prevented movement", "icon": "ShieldAlert", "positive": false }
+    ],
+    "columns": [
+      "Transaction",
+      "Account holder",
+      "Counterparty",
+      "Channel",
+      "Amount",
+      "Risk",
+      "Status",
+      "Action"
+    ]
+  },
+  "analyticsPage": {
+    "header": {
+      "subtitle": "Portfolio intelligence · trailing 30 days",
+      "title": "Risk analytics",
+      "description": "Understand where the branch is accumulating exposure."
+    },
+    "scoreMovement": {
+      "eyebrow": "Risk movement",
+      "title": "Average portfolio score",
+      "detail": "The branch is 7 points above its 30-day baseline",
+      "change": "+7.4%"
+    },
+    "concentration": {
+      "eyebrow": "Concentration",
+      "title": "Risk reasons",
+      "detail": "Share of triggered signals",
+      "footer": "Counterparty intelligence remains the largest driver."
+    },
+    "throughput": {
+      "eyebrow": "Throughput",
+      "title": "Transaction volume",
+      "detail": "Cleared versus held for review"
+    },
+    "watchlist": {
+      "eyebrow": "Branch watchlist",
+      "title": "Areas to watch",
+      "detail": "Ranked by change in risk concentration"
+    }
+  },
+  "settingsPage": {
+    "header": {
+      "subtitle": "Workspace preferences · Admin only",
+      "title": "System settings",
+      "description": "Shape how RakshaPay keeps your team informed and protected."
+    },
+    "toggleRows": [
+      {
+        "id": "auto-refresh",
+        "title": "Live queue refresh",
+        "detail": "Refresh account signals and alert counts every 60 seconds."
+      },
+      {
+        "id": "daily-digest",
+        "title": "Daily risk digest",
+        "detail": "Send a compact review summary at 8:30 AM on business days."
+      },
+      {
+        "id": "sensitive-data",
+        "title": "Show sensitive account data",
+        "detail": "Reveal full account numbers in detail panels and exports."
+      }
+    ],
+    "branches": ["Connaught Place Branch", "Defence Colony Branch", "Saket Branch"],
+    "reviewThresholds": ["₹2,00,000 and above", "₹5,00,000 and above", "All flagged movement"],
+    "signalHealth": {
+      "uptime": "99.98%",
+      "description": "Risk models and watchlists are operating normally across 4 branches.",
+      "statusText": "All systems operational"
+    }
+  },
+  "accounts": [
+    {
+      "id": "rp-092",
+      "holder": "Rahul Sharma",
+      "initials": "RS",
+      "accountNumber": "0923 5678 9012",
+      "customerId": "CUST-778899",
+      "ifscCode": "RKSH0000108",
+      "branchCode": "CP-0108",
+      "type": "Savings",
+      "kyc": "Verified",
+      "score": 64,
+      "risk": "Medium",
+      "transactions": 28,
+      "value": "₹4,25,000",
+      "balance": "₹6,84,220",
+      "branch": "Connaught Place Branch",
+      "opened": "12 Feb 2021",
+      "phone": "+91 98765 11442",
+      "email": "rahul.sharma@northmail.in"
+    },
+    {
+      "id": "rp-138",
+      "holder": "Rakesh Kumar",
+      "initials": "RK",
+      "accountNumber": "1384 5678 1123",
+      "customerId": "CUST-556677",
+      "ifscCode": "RKSH0000108",
+      "branchCode": "CP-0108",
+      "type": "Savings",
+      "kyc": "Verified",
+      "score": 72,
+      "risk": "High",
+      "transactions": 42,
+      "value": "₹8,75,000",
+      "balance": "₹12,18,540",
+      "branch": "Connaught Place Branch",
+      "opened": "28 Aug 2019",
+      "phone": "+91 98110 88203",
+      "email": "rakesh.kumar@northmail.in"
+    },
+    {
+      "id": "rp-201",
+      "holder": "Neha Verma",
+      "initials": "NV",
+      "accountNumber": "2011 7788 3344",
+      "customerId": "CUST-667788",
+      "ifscCode": "RKSH0000108",
+      "branchCode": "CP-0108",
+      "type": "Current",
+      "kyc": "Verified",
+      "score": 43,
+      "risk": "Medium",
+      "transactions": 15,
+      "value": "₹1,92,000",
+      "balance": "₹3,42,118",
+      "branch": "Connaught Place Branch",
+      "opened": "03 Nov 2022",
+      "phone": "+91 98990 34021",
+      "email": "neha.verma@northmail.in"
+    },
+    {
+      "id": "rp-089",
+      "holder": "Amit Gupta",
+      "initials": "AG",
+      "accountNumber": "0890 1234 5678",
+      "customerId": "CUST-889900",
+      "ifscCode": "RKSH0000108",
+      "branchCode": "CP-0108",
+      "type": "Savings",
+      "kyc": "Verified",
+      "score": 26,
+      "risk": "Low",
+      "transactions": 10,
+      "value": "₹95,000",
+      "balance": "₹2,04,816",
+      "branch": "Connaught Place Branch",
+      "opened": "18 May 2023",
+      "phone": "+91 98181 11206",
+      "email": "amit.gupta@northmail.in"
+    },
+    {
+      "id": "rp-255",
+      "holder": "Meera Iyer",
+      "initials": "MI",
+      "accountNumber": "2556 8899 0011",
+      "customerId": "CUST-990011",
+      "ifscCode": "RKSH0000108",
+      "branchCode": "CP-0108",
+      "type": "Savings",
+      "kyc": "Verified",
+      "score": 68,
+      "risk": "Medium",
+      "transactions": 31,
+      "value": "₹3,80,000",
+      "balance": "₹7,12,960",
+      "branch": "Connaught Place Branch",
+      "opened": "06 Jan 2020",
+      "phone": "+91 99876 20445",
+      "email": "meera.iyer@northmail.in"
+    },
+    {
+      "id": "rp-369",
+      "holder": "Vikram Patel",
+      "initials": "VP",
+      "accountNumber": "3698 7412 9630",
+      "customerId": "CUST-223344",
+      "ifscCode": "RKSH0000108",
+      "branchCode": "CP-0108",
+      "type": "Current",
+      "kyc": "Review",
+      "score": 81,
+      "risk": "High",
+      "transactions": 55,
+      "value": "₹12,40,000",
+      "balance": "₹19,84,231",
+      "branch": "Connaught Place Branch",
+      "opened": "22 Mar 2018",
+      "phone": "+91 98991 76230",
+      "email": "vikram.patel@northmail.in"
+    },
+    {
+      "id": "rp-147",
+      "holder": "Pooja Singh",
+      "initials": "PS",
+      "accountNumber": "1478 9632 1478",
+      "customerId": "CUST-334455",
+      "ifscCode": "RKSH0000108",
+      "branchCode": "CP-0108",
+      "type": "Savings",
+      "kyc": "Verified",
+      "score": 38,
+      "risk": "Low",
+      "transactions": 12,
+      "value": "₹1,20,000",
+      "balance": "₹1,84,442",
+      "branch": "Connaught Place Branch",
+      "opened": "15 Sep 2021",
+      "phone": "+91 98730 44018",
+      "email": "pooja.singh@northmail.in"
+    },
+    {
+      "id": "rp-258",
+      "holder": "Sanjay Mehta",
+      "initials": "SM",
+      "accountNumber": "2587 1478 3690",
+      "customerId": "CUST-445566",
+      "ifscCode": "RKSH0000108",
+      "branchCode": "CP-0108",
+      "type": "Savings",
+      "kyc": "Verified",
+      "score": 59,
+      "risk": "Medium",
+      "transactions": 22,
+      "value": "₹2,65,000",
+      "balance": "₹4,11,703",
+      "branch": "Connaught Place Branch",
+      "opened": "09 Jun 2022",
+      "phone": "+91 99200 10988",
+      "email": "sanjay.mehta@northmail.in"
+    },
+    {
+      "id": "rp-690",
+      "holder": "Kavita Joshi",
+      "initials": "KJ",
+      "accountNumber": "3690 2584 1597",
+      "customerId": "CUST-556668",
+      "ifscCode": "RKSH0000108",
+      "branchCode": "CP-0108",
+      "type": "Savings",
+      "kyc": "Verified",
+      "score": 22,
+      "risk": "Low",
+      "transactions": 8,
+      "value": "₹60,000",
+      "balance": "₹94,518",
+      "branch": "Connaught Place Branch",
+      "opened": "25 Apr 2024",
+      "phone": "+91 98992 44010",
+      "email": "kavita.joshi@northmail.in"
+    },
+    {
+      "id": "rp-159",
+      "holder": "Arjun Das",
+      "initials": "AD",
+      "accountNumber": "1597 7531 8520",
+      "customerId": "CUST-667799",
+      "ifscCode": "RKSH0000108",
+      "branchCode": "CP-0108",
+      "type": "Current",
+      "kyc": "Verified",
+      "score": 74,
+      "risk": "High",
+      "transactions": 47,
+      "value": "₹9,10,000",
+      "balance": "₹14,52,024",
+      "branch": "Connaught Place Branch",
+      "opened": "14 Oct 2020",
+      "phone": "+91 98711 72025",
+      "email": "arjun.das@northmail.in"
+    }
+  ],
+  "seedAlerts": [
+    {
+      "id": "AL-4028",
+      "title": "Rapid movement across new beneficiaries",
+      "detail": "Four outgoing transfers to new payees within 18 minutes.",
+      "account": "Rakesh Kumar",
+      "accountId": "rp-138",
+      "severity": "Critical",
+      "time": "12 min ago",
+      "status": "Open",
+      "signal": "Velocity"
+    },
+    {
+      "id": "AL-4027",
+      "title": "Transaction to high-risk entity",
+      "detail": "International transfer matched a monitored counterparty list.",
+      "account": "Vikram Patel",
+      "accountId": "rp-369",
+      "severity": "High",
+      "time": "42 min ago",
+      "status": "Investigating",
+      "signal": "Counterparty"
+    },
+    {
+      "id": "AL-4026",
+      "title": "Unusual transaction pattern",
+      "detail": "Spend profile differs 3.8× from the customer baseline.",
+      "account": "Arjun Das",
+      "accountId": "rp-159",
+      "severity": "High",
+      "time": "1 hr ago",
+      "status": "Open",
+      "signal": "Behaviour"
+    },
+    {
+      "id": "AL-4025",
+      "title": "First-time payee · high value",
+      "detail": "New beneficiary received a transfer above ₹2,00,000.",
+      "account": "Meera Iyer",
+      "accountId": "rp-255",
+      "severity": "Medium",
+      "time": "2 hrs ago",
+      "status": "Open",
+      "signal": "First payee"
+    },
+    {
+      "id": "AL-4024",
+      "title": "Multiple high-value transactions",
+      "detail": "Three credits crossed the daily review threshold.",
+      "account": "Rahul Sharma",
+      "accountId": "rp-092",
+      "severity": "Medium",
+      "time": "3 hrs ago",
+      "status": "Resolved",
+      "signal": "Value"
+    },
+    {
+      "id": "AL-4023",
+      "title": "KYC document nearing expiry",
+      "detail": "Identity document is due for refresh in 14 days.",
+      "account": "Neha Verma",
+      "accountId": "rp-201",
+      "severity": "Medium",
+      "time": "Yesterday",
+      "status": "Resolved",
+      "signal": "KYC"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "TXN-781042",
+      "accountId": "rp-138",
+      "customer": "Rakesh Kumar",
+      "type": "Debit",
+      "counterparty": "Nexora Trading LLP",
+      "amount": "₹3,80,000",
+      "rawAmount": 380000,
+      "status": "Review",
+      "risk": "High",
+      "time": "18 May · 11:42",
+      "channel": "NEFT"
+    },
+    {
+      "id": "TXN-781041",
+      "accountId": "rp-369",
+      "customer": "Vikram Patel",
+      "type": "Debit",
+      "counterparty": "Mira Global Pte. Ltd.",
+      "amount": "₹2,40,000",
+      "rawAmount": 240000,
+      "status": "Blocked",
+      "risk": "High",
+      "time": "18 May · 11:34",
+      "channel": "SWIFT"
+    },
+    {
+      "id": "TXN-781040",
+      "accountId": "rp-092",
+      "customer": "Rahul Sharma",
+      "type": "Credit",
+      "counterparty": "Asteria Payroll",
+      "amount": "₹1,85,400",
+      "rawAmount": 185400,
+      "status": "Cleared",
+      "risk": "Low",
+      "time": "18 May · 11:16",
+      "channel": "IMPS"
+    },
+    {
+      "id": "TXN-781039",
+      "accountId": "rp-159",
+      "customer": "Arjun Das",
+      "type": "Debit",
+      "counterparty": "Orion Cloud Services",
+      "amount": "₹96,700",
+      "rawAmount": 96700,
+      "status": "Review",
+      "risk": "Medium",
+      "time": "18 May · 10:58",
+      "channel": "UPI"
+    },
+    {
+      "id": "TXN-781038",
+      "accountId": "rp-255",
+      "customer": "Meera Iyer",
+      "type": "Debit",
+      "counterparty": "Saffron Estates",
+      "amount": "₹2,12,000",
+      "rawAmount": 212000,
+      "status": "Cleared",
+      "risk": "Medium",
+      "time": "18 May · 10:43",
+      "channel": "RTGS"
+    },
+    {
+      "id": "TXN-781037",
+      "accountId": "rp-201",
+      "customer": "Neha Verma",
+      "type": "Credit",
+      "counterparty": "Neha Verma · self",
+      "amount": "₹45,000",
+      "rawAmount": 45000,
+      "status": "Cleared",
+      "risk": "Low",
+      "time": "18 May · 10:21",
+      "channel": "UPI"
+    },
+    {
+      "id": "TXN-781036",
+      "accountId": "rp-089",
+      "customer": "Amit Gupta",
+      "type": "Debit",
+      "counterparty": "Metroline Utilities",
+      "amount": "₹8,240",
+      "rawAmount": 8240,
+      "status": "Cleared",
+      "risk": "Low",
+      "time": "18 May · 09:57",
+      "channel": "NACH"
+    },
+    {
+      "id": "TXN-781035",
+      "accountId": "rp-369",
+      "customer": "Vikram Patel",
+      "type": "Credit",
+      "counterparty": "Kaveri Manufacturing",
+      "amount": "₹7,80,000",
+      "rawAmount": 780000,
+      "status": "Review",
+      "risk": "High",
+      "time": "18 May · 09:42",
+      "channel": "NEFT"
+    }
+  ],
+  "scoreTrend": [
+    { "day": "12 May", "score": 46 },
+    { "day": "13 May", "score": 48 },
+    { "day": "14 May", "score": 51 },
+    { "day": "15 May", "score": 53 },
+    { "day": "16 May", "score": 49 },
+    { "day": "17 May", "score": 50 },
+    { "day": "18 May", "score": 52 }
+  ],
+  "weeklyVolume": [
+    { "day": "Mon", "cleared": 362, "review": 18 },
+    { "day": "Tue", "cleared": 418, "review": 23 },
+    { "day": "Wed", "cleared": 390, "review": 16 },
+    { "day": "Thu", "cleared": 476, "review": 31 },
+    { "day": "Fri", "cleared": 452, "review": 28 },
+    { "day": "Sat", "cleared": 298, "review": 12 },
+    { "day": "Sun", "cleared": 214, "review": 8 }
+  ],
+  "accountTrend": [
+    { "month": "Dec", "score": 41 },
+    { "month": "Jan", "score": 44 },
+    { "month": "Feb", "score": 39 },
+    { "month": "Mar", "score": 47 },
+    { "month": "Apr", "score": 50 },
+    { "month": "May", "score": 52 }
+  ],
+  "riskReasons": [
+    { "name": "Transactions to high-risk entities", "value": 42 },
+    { "name": "Unusual transaction pattern", "value": 28 },
+    { "name": "First-time payee (high value)", "value": 16 },
+    { "name": "Multiple high-value transactions", "value": 8 },
+    { "name": "Other", "value": 6 }
+  ],
+  "branchWatchlist": [
+    { "name": "Connaught Place", "detail": "37 high-risk accounts", "change": "+12.1%", "color": "text-red-500", "trendingUp": true },
+    { "name": "Defence Colony", "detail": "21 high-risk accounts", "change": "+4.7%", "color": "text-amber-500", "trendingUp": true },
+    { "name": "Saket", "detail": "14 high-risk accounts", "change": "−2.8%", "color": "text-emerald-500", "trendingUp": false },
+    { "name": "Vasant Vihar", "detail": "9 high-risk accounts", "change": "−5.2%", "color": "text-emerald-500", "trendingUp": false }
+  ]
+}
