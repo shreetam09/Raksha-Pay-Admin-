@@ -1,34 +1,24 @@
-<<<<<<< HEAD
-ml/datasets
-*/.env
-# --- Python ---
+# compiled output
+dist
+dist/
+tmp
+out-tsc
+*.tsbuildinfo
+.expo
+.expo-shared
+
+# dependencies
+node_modules/
+
+# Python / ML (if applicable)
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
-*.egg-info/
-.eggs/
-build/
-dist/
-
-# --- Virtual environments ---
 .venv/
 venv/
 env/
 ENV/
-
-# --- Datasets (large, not for git) ---
-datasets/
-*.csv
-*.csv.gz
-
-# --- Processed data / feature matrices ---
-processed/
-*.parquet
-*.feather
-
-# --- Model artifacts ---
-artifacts/
 *.joblib
 *.pkl
 *.pickle
@@ -39,41 +29,7 @@ artifacts/
 *.ckpt
 mlruns/
 mlflow.db
-
-# --- Jupyter ---
 .ipynb_checkpoints/
-*.ipynb_checkpoints/
-
-# --- OS / editor ---
-.DS_Store
-Thumbs.db
-.vscode/
-.idea/
-
-# --- Env / secrets ---
-.env
-.env.*
-*.key
-
-# --- Logs ---
-*.log
-logs/
-
-# --- Kaggle ---
-kaggle.json
-=======
-# See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
-# compiled output
-dist
-tmp
-out-tsc
-*.tsbuildinfo
-.expo
-.expo-shared
-
-# dependencies
-node_modules
 
 # IDEs and editors
 /.idea
@@ -83,32 +39,32 @@ node_modules
 *.launch
 .settings/
 *.sublime-workspace
-
-# IDE - VSCode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
+# Logs & temp
+*.log
+logs/
 npm-debug.log
 yarn-error.log
 testem.log
-/typings
+.sass-cache
+connect.lock
+coverage
+
+# Env / secrets
+.env
+.env.*
+*.key
+kaggle.json
 
 # System Files
 .DS_Store
 Thumbs.db
 
-.cursor/rules/nx-rules.mdc
-.github/instructions/nx.instructions.md
-
 # Replit
 .cache/
 .local/
->>>>>>> 9622636 (feat: complete RakshaPay bank admin app redesign in JS/JSX driven by appConfig.json)

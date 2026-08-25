@@ -14,7 +14,7 @@
       "label": "Workspace",
       "items": [
         { "href": "/", "label": "Overview", "icon": "LayoutDashboard" },
-        { "href": "/accounts/rp-092", "label": "Accounts", "icon": "WalletCards" },
+        { "href": "/accounts", "label": "Accounts", "icon": "WalletCards" },
         { "href": "/transactions", "label": "Transactions", "icon": "ArrowLeftRight" },
         { "href": "/alerts", "label": "Alerts", "icon": "Bell", "count": 7 },
         { "href": "/analytics", "label": "Risk analytics", "icon": "BarChart3" }
