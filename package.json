@@ -1,20 +1,27 @@
 {
   "name": "workspace",
   "version": "0.0.0",
-  "license": "MIT",
-  "scripts": {
-    "dev": "pnpm --filter @workspace/rakshapay-admin run dev",
-    "dev:admin": "pnpm --filter @workspace/rakshapay-admin run dev",
-    "dev:api": "pnpm --filter @workspace/api-server run dev",
-    "dev:sandbox": "pnpm --filter @workspace/mockup-sandbox run dev",
-    "build": "pnpm -r --if-present run build"
-  },
   "private": true,
+  "license": "MIT",
+  "workspaces": [
+    "artifacts/*",
+    "lib/*",
+    "lib/integrations/*",
+    "scripts",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@workspace/rakshapay-admin",
+    "dev:admin": "npm run dev --workspace=@workspace/rakshapay-admin",
+    "dev:api": "npm run dev --workspace=@workspace/api-server",
+    "dev:sandbox": "npm run dev --workspace=@workspace/mockup-sandbox",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspaces --if-present"
+  },
   "dependencies": {
     "@replit/connectors-sdk": "^0.4.1"
   },
   "devDependencies": {
     "prettier": "^3.9.6"
-  },
-  "packageManager": "pnpm@11.22.0+sha512.1ff870c4c6133dfd88fb2afc46dd13d47f09c9794b438c6fdb47ca98caf3bc16381ee0be93a091b8e3824cf01f889f46d7d9e20910fb0be1ab0fb5baa80dd621"
+  }
 }

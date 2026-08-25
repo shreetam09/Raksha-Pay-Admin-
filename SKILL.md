@@ -64,19 +64,19 @@ This repository has been fully converted from TypeScript to **pure modern JavaSc
 ### From the Root Directory:
 ```bash
 # Start RakshaPay Admin Dashboard (http://localhost:5173)
-pnpm run dev
+npm run dev
 
 # Start Backend API Server
-pnpm run dev:api
+npm run dev:api
 
 # Start Mockup Sandbox
-pnpm run dev:sandbox
+npm run dev:sandbox
 ```
 
 ### Direct Package Execution:
 ```bash
 # Admin Frontend
-cd artifacts/rakshapay-admin && pnpm run dev
+cd artifacts/rakshapay-admin && npm run dev
 
 # User Frontend
 cd frontend && npm run dev
